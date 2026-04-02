@@ -57,16 +57,19 @@ app.get("/api/status", (req, res) => {
 
 app.post("/api/prompt", async (req, res) => {
   const {text} = req.body;
-
-  const respText = await callPrompt(`Напиши коротко, що ми робили з учнями за цією темою: ${text}. Без всяких емоджі та символів, простими 1-2 реченнями.`, {
-    model: "gemma-3-1b-it",
-    temperature: 0.5,
-  });
-
-  res.send({
-    success: true,
-    resp: respText,
-  });
+    try{
+        const respText = await callPrompt(`Напиши коротко, що ми робили з учнями за цією темою: ${text}. Без всяких емоджі та символів, простими 1-2 реченнями.`, {
+          model: "gemma-3-1b-it",
+          temperature: 0.5,
+        });
+      
+        res.send({
+          success: true,
+          resp: respText,
+        });
+    } catch (err){
+        res.send("Encountered =>", err)
+    }
 });
 
 app.listen(port, () => console.log("Server running on port 3000"));
