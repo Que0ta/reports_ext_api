@@ -1,0 +1,17 @@
+{
+  "name": "extension_api",
+  "version": "1.0.0",
+  "description": "For reports extension.",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon index.js"
+  },
+  "author": "Que0ta",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^2.2.2",
+    "dotenv": "^17.4.0",
+    "express": "^5.2.1",
+    "nodemon": "^3.1.14"
+  }
+}
