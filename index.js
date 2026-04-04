@@ -10,12 +10,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 
-const standartLimiter = rateLimit({
-  windowMs: 60 * 1000, // 1 minute
-  max: 5, // 5 RPM
-});
-
-
 async function callPrompt(prompt, options = {}) {
   const API_KEY = process.env.API; // from aistudio.google.com
   const MODEL = options.model ?? "gemma-3-1b-it";
@@ -79,22 +73,5 @@ app.post("/api/prompt", async (req, res) => {
     }
 });
 
-app.post("/api/standart", async (req, res) => {
-  const {text} = req.body;
-    try{
-        const respText = await callPrompt(text, {
-          model: "gemma-3-4b-it",
-          temperature: 0.5,
-        });
-      
-        res.send({
-          success: true,
-          resp: respText,
-        });
-
-    } catch (err){
-        res.send("Encountered =>", err)
-    }
-});
 
 app.listen(port, () => console.log("Server running on port 3000"));
