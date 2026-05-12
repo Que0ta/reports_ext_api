@@ -47,6 +47,14 @@ async function callPrompt(prompt, options = {}) {
   return data.candidates?.[0]?.content?.parts?.[0]?.text ?? null;
 }
 
+// const respText = await callPrompt(`Напиши коротко (до 100 символів), що ми робили з учнями за цією темою: JS змінні. Без всяких емоджі та зірочоко, інших символів. Простими двома реченнями, та виведи тільки фінальну відповідь, без роздумів та параметрів.`, {
+  // model: "gemini-3.1-flash-lite",
+  // model: "gemma-4-26b-it",
+  // model: "gemini-2.5-flash-lite",
+//   temperature: 0.5,
+// });
+// console.log(respText);
+
 
 app.get("/api/status", (req, res) => {
     try{
@@ -60,7 +68,7 @@ app.post("/api/prompt", async (req, res) => {
   const {text} = req.body;
     try{
         const respText = await callPrompt(`Напиши коротко (до 100 символів), що ми робили з учнями за цією темою: ${text}. Без всяких емоджі та зірочоко, інших символів. Простими двома реченнями, та виведи тільки фінальну відповідь, без роздумів та параметрів.`, {
-          model: "gemma-4-26b-a4b-it",
+          model: "gemini-2.5-flash-lite",
           temperature: 0.5,
         });
         res.json({
