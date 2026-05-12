@@ -12,7 +12,7 @@ app.use(cors());
 
 async function callPrompt(prompt, options = {}) {
   const API_KEY = process.env.API; // from aistudio.google.com
-  const MODEL = options.model ?? "gemma-3-1b-it";
+  const MODEL = options.model ?? "gemma-4-26b-a4b-it";
   const URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${API_KEY}`;
 
   const body = {
@@ -43,10 +43,10 @@ async function callPrompt(prompt, options = {}) {
   }
 
   const data = await response.json();
-
   // Extract the text from the response
   return data.candidates?.[0]?.content?.parts?.[0]?.text ?? null;
 }
+
 
 app.get("/api/status", (req, res) => {
     try{
@@ -60,18 +60,17 @@ app.post("/api/prompt", async (req, res) => {
   const {text} = req.body;
     try{
         const respText = await callPrompt(`Напиши коротко, що ми робили з учнями за цією темою: ${text}. Без всяких емоджі та символів, простими 1-2 реченнями.`, {
-          model: "gemma-3-1b-it",
+          model: "gemma-4-26b-a4b-it",
           temperature: 0.5,
         });
-      
         res.send({
           success: true,
           resp: respText,
         });
     } catch (err){
-        res.send("Encountered =>", err)
+      res.send("Encountered =>", err)
     }
 });
 
 
-app.listen(port, () => console.log("Server running on port 3000"));
+app.listen(port, () => console.log(`Server running on port ${port}`));
