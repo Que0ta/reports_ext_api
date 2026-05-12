@@ -63,7 +63,7 @@ app.post("/api/prompt", async (req, res) => {
           model: "gemma-4-26b-a4b-it",
           temperature: 0.5,
         });
-        res.send({
+        res.json({
           success: true,
           resp: respText,
         });
