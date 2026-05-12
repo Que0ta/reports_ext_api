@@ -59,7 +59,7 @@ app.get("/api/status", (req, res) => {
 app.post("/api/prompt", async (req, res) => {
   const {text} = req.body;
     try{
-        const respText = await callPrompt(`Напиши коротко, що ми робили з учнями за цією темою: ${text}. Без всяких емоджі та символів, простими 1-2 реченнями.`, {
+        const respText = await callPrompt(`Напиши коротко (до 100 символів), що ми робили з учнями за цією темою: ${text}. Без всяких емоджі та зірочоко, інших символів. Простими двома реченнями.`, {
           model: "gemma-4-26b-a4b-it",
           temperature: 0.5,
         });
