@@ -127,4 +127,33 @@ app.post("/db/questions", async (req, res) => {
   }
 });
 
+app.delete("/db/del-question/:id", async (req, res) => {
+  const { id } = req.params;
+
+  const { data, error } = await supabase
+    .from("questions")
+    .delete()
+    .eq("id", id)
+    .select();
+
+  if (error) {
+    return res.status(500).json({
+      success: false,
+      error: error.message,
+    });
+  }
+
+  if (!data.length) {
+    return res.status(404).json({
+      success: false,
+      message: "Помилка API посилання!",
+    });
+  }
+
+  res.json({
+    success: true,
+    deleted: data[0],
+  });
+});
+
 app.listen(port, () => console.log(`Server running on port ${port}`));
