@@ -14,6 +14,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 const BOT_TOKEN = process.env.Bot;
+app.set("trust proxy", 1);
 
 const supabase = createClient(
   process.env.DB_LiNK,
