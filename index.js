@@ -11,6 +11,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 
+const BOT_TOKEN = process.env.Bot;
+
 const supabase = createClient(
   process.env.DB_LiNK,
   process.env.DB_TOKEN
@@ -126,6 +128,36 @@ app.post("/db/questions", async (req, res) => {
     res.json({ status: "failed", error: err.message });
   }
 });
+
+
+
+app.post("/ahead/sendMessage", async(req,res)=>{
+  const { message } = req.body;
+  const chatId = process.env.token_id;
+    try {
+        const response = await fetch(
+            `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message,
+                }),
+            }
+        );
+
+        const data = await response.json();
+
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({
+            error: error.message,
+        });
+    }
+})
 
 app.delete("/db/del-question/:id", async (req, res) => {
   const { id } = req.params;
