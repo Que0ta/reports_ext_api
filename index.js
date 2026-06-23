@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import cors from "cors";
 import { createClient } from "@supabase/supabase-js";
+import rateLimit from "express-rate-limit";
+
 dotenv.config();
 
 const port = process.env.PORT || 3000;
@@ -17,6 +19,20 @@ const supabase = createClient(
   process.env.DB_LiNK,
   process.env.DB_TOKEN
 );
+
+const contactCors = cors({
+    origin: "https://que0ta.github.io/LookAHead/", 
+    methods: ["POST"],
+});
+
+const contactLimiter = rateLimit({
+    windowMs: 30 * 60 * 1000, 
+    max: 5,                   
+    message: {
+        success: false,
+        error: "Too many requests. Try again later."
+    }
+});
 
 async function callPrompt(prompt, options = {}) {
   const API_KEY = process.env.API; // from aistudio.google.com
@@ -131,7 +147,7 @@ app.post("/db/questions", async (req, res) => {
 
 
 
-app.post("/ahead/sendMessage", async(req,res)=>{
+app.post("/ahead/sendMessage", contactCors, contactLimiter, async(req,res)=>{
   const { message } = req.body;
   const chatId = process.env.token_id;
     try {
