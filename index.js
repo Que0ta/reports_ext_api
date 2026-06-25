@@ -27,8 +27,8 @@ const contactCors = cors({
 });
 
 const contactLimiter = rateLimit({
-    windowMs: 1 * 60 * 1000, 
-    max: 555,                   
+    windowMs: 15 * 60 * 1000, 
+    max: 5,                   
     message: {
         success: false,
         error: "Too many requests. Try again later."
@@ -168,7 +168,7 @@ app.post("/ahead/sendMessage", contactCors, contactLimiter, async(req,res)=>{
 
         const data = await response.json();
 
-        res.json(data);
+        res.json({message: "success!"});
     } catch (error) {
         res.status(500).json({
             error: error.message,
