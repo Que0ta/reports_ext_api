@@ -22,7 +22,7 @@ const supabase = createClient(
 );
 
 const contactCors = cors({
-    origin: "https://que0ta.github.io/LookAHead/", 
+    origin: "https://que0ta.github.io", 
     methods: ["POST"],
 });
 
