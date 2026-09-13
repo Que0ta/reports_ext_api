@@ -93,7 +93,7 @@ app.post("/api/prompt", async (req, res) => {
   const {text} = req.body;
   try{
     const respText = await callPrompt(`Напиши в загальному, що ми робили з учнями (до 150 символів), що ми робили з учнями за цією темою: ${text}. Без всяких емоджі та зірочоко, інших символів. Простими загальними реченнями, та виведи тільки фінальну відповідь, без роздумів та параметрів.`, {
-      model: "gemini-2.5-flash-lite",
+      model: "gemini-3.1-flash-lite",
       temperature: 0.5,
     });
     res.json({
