@@ -20,12 +20,13 @@ const supabase = createClient(
   process.env.DB_LiNK,
   process.env.DB_TOKEN
 );
-
 const contactCors = cors({
-    origin: "https://que0ta.github.io", 
+    origin: [
+        "https://que0ta.github.io",
+        "https://frontend-guide-olfd.onrender.com"
+    ],
     methods: ["POST"],
 });
-
 const contactLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, 
     max: 5,                   
