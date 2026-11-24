@@ -187,7 +187,7 @@ app.post("/ahead/sendMessage", contactCors, contactLimiter, async(req,res)=>{
     }
 })
 
-app.post("/portfolio/sendMessage", pavlivCors, contactLimiter, async(req,res)=>{
+app.post("/portfolio/sendMessage", contactLimiter, async(req,res)=>{
   const { message } = req.body;
   const chatId = process.env.token_id;
     try {
