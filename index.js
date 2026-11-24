@@ -14,6 +14,8 @@ app.use(bodyParser.json());
 app.use(cors());
 
 const BOT_TOKEN = process.env.Bot;
+// optional
+const PAVLIV_TOKEN = process.env.PAVLIV_BOT;
 app.set("trust proxy", 1);
 
 const supabase = createClient(
@@ -27,6 +29,14 @@ const contactCors = cors({
     ],
     methods: ["POST"],
 });
+// optional*
+const pavlivCors = cors({
+    origin: [
+        "https://portfolio-illiapavliv.onrender.com"
+    ],
+    methods: ["POST"],
+});
+
 const contactLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, 
     max: 50,                   
@@ -155,6 +165,34 @@ app.post("/ahead/sendMessage", contactCors, contactLimiter, async(req,res)=>{
     try {
         const response = await fetch(
             `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message,
+                }),
+            }
+        );
+
+        const data = await response.json();
+
+        res.json({message: "success!"});
+    } catch (error) {
+        res.status(500).json({
+            error: error.message,
+        });
+    }
+})
+
+app.post("/portfolio/sendMessage", pavlivCors, contactLimiter, async(req,res)=>{
+  const { message } = req.body;
+  const chatId = process.env.token_id;
+    try {
+        const response = await fetch(
+            `https://api.telegram.org/bot${PAVLIV_TOKEN}/sendMessage`,
             {
                 method: "POST",
                 headers: {
