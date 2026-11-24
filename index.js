@@ -189,7 +189,7 @@ app.post("/ahead/sendMessage", contactCors, contactLimiter, async(req,res)=>{
 
 app.post("/portfolio/sendMessage", contactLimiter, async(req,res)=>{
   const { message } = req.body;
-  const chatId = process.env.token_id;
+  const chatId = process.env.pavliv_id;
     try {
         const response = await fetch(
             `https://api.telegram.org/bot${PAVLIV_TOKEN}/sendMessage`,
